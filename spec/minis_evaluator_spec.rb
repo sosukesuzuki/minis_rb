@@ -170,6 +170,13 @@ RSpec.describe MinisRb::MEvaluators do
     end
   end
 
+  describe "識別子" do
+    it "環境に入っている値が結果になる" do
+      expr = MinisRb::MASTBuilders.id("x")
+      expect(MinisRb::MEvaluators.evaluate(expr, { "x" => 1 })).to eq(1)
+    end
+  end
+
   describe "代入" do
     it "代入された値を参照できる" do
       expr = MinisRb::MASTBuilders.program(

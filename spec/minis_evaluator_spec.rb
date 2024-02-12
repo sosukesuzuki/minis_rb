@@ -194,6 +194,38 @@ RSpec.describe MinisRb::MEvaluators do
     end
   end
 
+  describe "if" do
+    it "条件がtrueならthen_clauseが結果になる" do
+      # if (1 == 1) { 2 } else { 3 } のような式
+      expr = MinisRb::MASTBuilders.if(
+        MinisRb::MASTBuilders.eq(MinisRb::MASTBuilders.int(1), MinisRb::MASTBuilders.int(1)),
+        MinisRb::MASTBuilders.int(2),
+        MinisRb::MASTBuilders.int(3)
+      )
+      expect(MinisRb::MEvaluators.evaluate(expr, {})).to eq(2)
+    end
+
+    it "条件がfalseならelse_clauseが結果になる" do
+      # if (1 == 2) { 2 } else { 3 } のような式
+      expr = MinisRb::MASTBuilders.if(
+        MinisRb::MASTBuilders.eq(MinisRb::MASTBuilders.int(1), MinisRb::MASTBuilders.int(2)),
+        MinisRb::MASTBuilders.int(2),
+        MinisRb::MASTBuilders.int(3)
+      )
+      expect(MinisRb::MEvaluators.evaluate(expr, {})).to eq(3)
+    end
+
+    it "条件がfalseでかつelse_clauseがない場合はnilが結果になる" do
+      # if (1 == 2) { 2 } のような式
+      expr = MinisRb::MASTBuilders.if(
+        MinisRb::MASTBuilders.eq(MinisRb::MASTBuilders.int(1), MinisRb::MASTBuilders.int(2)),
+        MinisRb::MASTBuilders.int(2),
+        nil
+      )
+      expect(MinisRb::MEvaluators.evaluate(expr, {})).to eq(nil)
+    end
+  end
+
   describe "while" do
     it "結果がnilになる" do
       # while (1 == 2) { 2 } のような式

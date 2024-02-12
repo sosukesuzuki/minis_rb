@@ -40,6 +40,15 @@ module MinisRb
           condition = evaluate(e.condition, env)
         end
         nil
+      elsif e.is_a? MIf
+        condition = evaluate(e.condition, env)
+        result = nil
+        if condition
+          result = evaluate(e.then_clause, env)
+        elsif e.else_clause
+          result = evaluate(e.else_clause, env)
+        end
+        result
       elsif e.is_a? MAssignment
         env[e.name] = evaluate(e.expression, env)
         env[e.name]

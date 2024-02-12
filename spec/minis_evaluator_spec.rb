@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.describe MinisRb::MEvaluators do
   describe "数学の演算" do
     it "1と2の和が3になる" do

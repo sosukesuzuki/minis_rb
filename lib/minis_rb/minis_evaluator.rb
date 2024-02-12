@@ -6,11 +6,11 @@ module MinisRb
   module MEvaluators
     def self.evaluate_program(program)
       environment = {}
-      program[:functions].each do |function|
-        environment[function[:name]] = function
+      program.functions.each do |function|
+        environment[function.name] = function
       end
       result = nil
-      program[:bodies].each do |body|
+      program.bodies.each do |body|
         result = evaluate(body, environment)
       end
       result
@@ -33,7 +33,7 @@ module MinisRb
         result
       elsif e.is_a? MWhile
         condition = evaluate(e.condition, env)
-        while condition != 0
+        while condition != false
           e.bodies.each do |body|
             evaluate(body, env)
           end
@@ -50,9 +50,9 @@ module MinisRb
         args = e.args.map { |arg| evaluate(arg, env) }
         new_environment = env.clone
         args.each_with_index do |arg, i|
-          new_environment[func[:params][i]] = arg
+          new_environment[func.params[i]] = arg
         end
-        evaluate(func[:body], new_environment)
+        evaluate(func.body, new_environment)
       elsif e.is_a? MInt
         e.value
       else

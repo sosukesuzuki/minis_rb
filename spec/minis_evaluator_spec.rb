@@ -158,4 +158,59 @@ RSpec.describe MinisRb::MEvaluators do
       end
     end
   end
+
+  describe "連接" do
+    it "もっとも右の式の評価結果が全体の評価結果になる" do
+      expr = MinisRb::MASTBuilders.seq(
+        MinisRb::MASTBuilders.int(1),
+        MinisRb::MASTBuilders.int(2),
+        MinisRb::MASTBuilders.int(3)
+      )
+      expect(MinisRb::MEvaluators.evaluate(expr, {})).to eq(3)
+    end
+  end
+
+  describe "代入" do
+    it "代入された値を参照できる" do
+      expr = MinisRb::MASTBuilders.program(
+        [],
+        MinisRb::MASTBuilders.assign("x", MinisRb::MASTBuilders.int(0)),
+        MinisRb::MASTBuilders.assign("x", MinisRb::MASTBuilders.int(1)),
+        MinisRb::MASTBuilders.id("x")
+      )
+      expect(MinisRb::MEvaluators.evaluate_program(expr)).to eq(1)
+    end
+
+    it "代入した値が結果になる" do
+      expr = MinisRb::MASTBuilders.assign("x", MinisRb::MASTBuilders.int(1))
+      expect(MinisRb::MEvaluators.evaluate(expr, {})).to eq(1)
+    end
+  end
+
+  describe "while" do
+    it "結果がnilになる" do
+      # while (1 == 2) { 2 } のような式
+      expr = MinisRb::MASTBuilders.while(
+        MinisRb::MASTBuilders.eq(MinisRb::MASTBuilders.int(1), MinisRb::MASTBuilders.int(2)),
+        MinisRb::MASTBuilders.int(2)
+      )
+      expect(MinisRb::MEvaluators.evaluate(expr, {})).to eq(nil)
+    end
+
+    it "bodiesが繰り返される" do
+      # x = 0; while (x < 3) { x = x + 1 }; x; のような式
+      expr = MinisRb::MASTBuilders.program(
+        [],
+        MinisRb::MASTBuilders.assign("x", MinisRb::MASTBuilders.int(0)),
+        MinisRb::MASTBuilders.while(
+          MinisRb::MASTBuilders.lt(MinisRb::MASTBuilders.id("x"), MinisRb::MASTBuilders.int(3)),
+          MinisRb::MASTBuilders.assign("x",
+                                       MinisRb::MASTBuilders.add(MinisRb::MASTBuilders.id("x"),
+                                                                 MinisRb::MASTBuilders.int(1)))
+        ),
+        MinisRb::MASTBuilders.id("x")
+      )
+      expect(MinisRb::MEvaluators.evaluate_program(expr)).to eq(3)
+    end
+  end
 end

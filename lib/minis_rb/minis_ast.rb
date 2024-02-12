@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class MAST
+  attr_reader :type
   def initialize(type)
     @type = type
   end
@@ -13,6 +14,7 @@ class MExpr < MAST
 end
 
 class MProgram < MAST
+  attr_reader :functions, :bodies
   def initialize(functions, *bodies)
     super("MProgram")
     @functions = functions
@@ -21,6 +23,7 @@ class MProgram < MAST
 end
 
 class MFunc < MAST
+  attr_reader :name, :params, :body
   def initialize(name, params, body)
     super("MFunc")
     @name = name
@@ -30,6 +33,7 @@ class MFunc < MAST
 end
 
 class MBinExpr < MExpr
+  attr_reader :op, :lhs, :rhs
   def initialize(op, lhs, rhs)
     super("MBinExpr")
     @op = op
@@ -39,6 +43,7 @@ class MBinExpr < MExpr
 end
 
 class MIf < MExpr
+  attr_reader :condition, :then_clause, :else_clause
   def initialize(condition, then_clause, else_clause)
     super("MIf")
     @condition = condition
@@ -48,6 +53,7 @@ class MIf < MExpr
 end
 
 class MSeq < MExpr
+  attr_reader :bodies
   def initialize(*bodies)
     super("MSeq")
     @bodies = bodies
@@ -55,6 +61,7 @@ class MSeq < MExpr
 end
 
 class MWhile < MExpr
+  attr_reader :condition, :bodies
   def initialize(condition, *bodies)
     super("MWhile")
     @condition = condition
@@ -63,6 +70,7 @@ class MWhile < MExpr
 end
 
 class MCall < MExpr
+  attr_reader :name, :args
   def initialize(name, *args)
     super("MCall")
     @name = name
@@ -71,6 +79,7 @@ class MCall < MExpr
 end
 
 class MAssignment < MExpr
+  attr_reader :name, :expression
   def initialize(name, expression)
     super("MAssignment")
     @name = name
@@ -79,6 +88,7 @@ class MAssignment < MExpr
 end
 
 class MInt < MExpr
+  attr_reader :value
   def initialize(value)
     super("MInt")
     @value = value
@@ -86,6 +96,7 @@ class MInt < MExpr
 end
 
 class MIdent < MExpr
+  attr_reader :name
   def initialize(name)
     super("MIdent")
     @name = name
@@ -95,7 +106,6 @@ end
 module MinisRb
   module MASTBuilders
     def self.program(functions, *bodies)
-      A
       MProgram.new(functions, *bodies)
     end
 

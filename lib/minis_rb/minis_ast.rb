@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class MAST
   def initialize(type)
     @type = type
@@ -90,80 +92,83 @@ class MIdent < MExpr
   end
 end
 
-module T
-  def self.program(functions, *bodies)
-    MProgram.new(functions, *bodies)
-  end
+module MinisRb
+  module MASTBuilders
+    def self.program(functions, *bodies)
+      A
+      MProgram.new(functions, *bodies)
+    end
 
-  def self.function(name, params, body)
-    MFunc.new(name, params, body)
-  end
+    def self.function(name, params, body)
+      MFunc.new(name, params, body)
+    end
 
-  def self.add(a, b)
-    MBinExpr.new("+", a, b)
-  end
+    def self.add(a, b)
+      MBinExpr.new("+", a, b)
+    end
 
-  def self.sub(a, b)
-    MBinExpr.new("-", a, b)
-  end
+    def self.sub(a, b)
+      MBinExpr.new("-", a, b)
+    end
 
-  def self.mul(a, b)
-    MBinExpr.new("*", a, b)
-  end
+    def self.mul(a, b)
+      MBinExpr.new("*", a, b)
+    end
 
-  def self.div(a, b)
-    MBinExpr.new("/", a, b)
-  end
+    def self.div(a, b)
+      MBinExpr.new("/", a, b)
+    end
 
-  def self.lt(a, b)
-    MBinExpr.new("<", a, b)
-  end
+    def self.lt(a, b)
+      MBinExpr.new("<", a, b)
+    end
 
-  def self.gt(a, b)
-    MBinExpr.new(">", a, b)
-  end
+    def self.gt(a, b)
+      MBinExpr.new(">", a, b)
+    end
 
-  def self.lte(a, b)
-    MBinExpr.new("<=", a, b)
-  end
+    def self.lte(a, b)
+      MBinExpr.new("<=", a, b)
+    end
 
-  def self.gte(a, b)
-    MBinExpr.new(">=", a, b)
-  end
+    def self.gte(a, b)
+      MBinExpr.new(">=", a, b)
+    end
 
-  def self.eq(a, b)
-    MBinExpr.new("==", a, b)
-  end
+    def self.eq(a, b)
+      MBinExpr.new("==", a, b)
+    end
 
-  def self.neq(a, b)
-    MBinExpr.new("!=", a, b)
-  end
+    def self.neq(a, b)
+      MBinExpr.new("!=", a, b)
+    end
 
-  def self.int(value)
-    MInt.new(value)
-  end
+    def self.int(value)
+      MInt.new(value)
+    end
 
-  def self.assign(name, value)
-    MAssignment.new(name, value)
-  end
+    def self.assign(name, value)
+      MAssignment.new(name, value)
+    end
 
-  def self.id(name)
-    MIdent.new(name)
-  end
+    def self.id(name)
+      MIdent.new(name)
+    end
 
-  def self.seq(*expressions)
-    MSeq.new(*expressions)
-  end
+    def self.seq(*expressions)
+      MSeq.new(*expressions)
+    end
 
-  def self.call(name, *args)
-    MCall.new(name, *args)
-  end
+    def self.call(name, *args)
+      MCall.new(name, *args)
+    end
 
-  def self.while(condition, *bodies)
-    MWhile.new(condition, *bodies)
-  end
+    def self.while(condition, *bodies)
+      MWhile.new(condition, *bodies)
+    end
 
-  def self.if(condition, then_clause, else_clause)
-    MIf.new(condition, then_clause, else_clause)
+    def self.if(condition, then_clause, else_clause)
+      MIf.new(condition, then_clause, else_clause)
+    end
   end
 end

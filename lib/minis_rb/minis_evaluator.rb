@@ -64,6 +64,12 @@ module MinisRb
         evaluate(func.body, new_environment)
       elsif e.is_a? MInt
         e.value
+      elsif e.is_a? MArray
+        e.elements.map { |elem| evaluate(elem, env) }
+      elsif e.is_a? MIndex
+        array = evaluate(e.array, env)
+        index = evaluate(e.index, env)
+        array[index]
       else
         raise "Unknown expression type: #{e.class} #{e.inspect}"
       end

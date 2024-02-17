@@ -114,6 +114,25 @@ class MIdent < MExpr
   end
 end
 
+class MArray < MExpr
+  attr_reader :elements
+
+  def initialize(elements)
+    super("MArray")
+    @elements = elements
+  end
+end
+
+class MIndex < MExpr
+  attr_reader :array, :index
+
+  def initialize(array, index)
+    super("MIndex")
+    @array = array
+    @index = index
+  end
+end
+
 module MinisRb
   module MASTBuilders
     def self.program(functions, *bodies)
@@ -190,6 +209,14 @@ module MinisRb
 
     def self.if(condition, then_clause, else_clause)
       MIf.new(condition, then_clause, else_clause)
+    end
+
+    def self.array(*elements)
+      MArray.new(elements)
+    end
+
+    def self.index(array, index)
+      MIndex.new(array, index)
     end
   end
 end

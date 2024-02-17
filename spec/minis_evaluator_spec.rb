@@ -260,11 +260,25 @@ RSpec.describe MinisRb::MEvaluators do
       # def f(x) { x + 1 }; f(1) のような式
       program = MinisRb::MASTBuilders.program(
         [
-          MinisRb::MASTBuilders.function("f", ["x"], MinisRb::MASTBuilders.add(MinisRb::MASTBuilders.id("x"), MinisRb::MASTBuilders.int(1)))
+          MinisRb::MASTBuilders.function("f", ["x"],
+                                         MinisRb::MASTBuilders.add(MinisRb::MASTBuilders.id("x"), MinisRb::MASTBuilders.int(1)))
         ],
         MinisRb::MASTBuilders.call("f", MinisRb::MASTBuilders.int(1))
       )
       expect(MinisRb::MEvaluators.evaluate_program(program)).to eq(2)
+    end
+  end
+
+  describe "配列" do
+    it "配列の要素をインデックスで参照できる" do
+      expr = MinisRb::MASTBuilders.program(
+        [],
+        MinisRb::MASTBuilders.assign("a",
+                                     MinisRb::MASTBuilders.array(MinisRb::MASTBuilders.int(1),
+                                                                 MinisRb::MASTBuilders.int(2), MinisRb::MASTBuilders.int(3))),
+        MinisRb::MASTBuilders.index(MinisRb::MASTBuilders.id("a"), MinisRb::MASTBuilders.int(1))
+      )
+      expect(MinisRb::MEvaluators.evaluate_program(expr)).to eq(2)
     end
   end
 end

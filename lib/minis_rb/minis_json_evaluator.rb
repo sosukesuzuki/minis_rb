@@ -34,6 +34,8 @@ module MinisRb
     def self.translate_to_ast(json_object)
       if json_object.is_a? Integer
         MASTBuilders.int(json_object)
+      elsif json_object.is_a? Array
+        MASTBuilders.array(*json_object.map { |item| translate_to_ast(item) })
       elsif json_object.is_a? Hash
         case json_object["type"]
         when "+"
@@ -113,6 +115,11 @@ module MinisRb
           MASTBuilders.seq(
             *json_object["expressions"].map { |expr| translate_to_ast(expr) }
           )
+        when "index"
+            MASTBuilders.index(
+                translate_to_ast(json_object["array"]),
+                translate_to_ast(json_object["index"])
+            )
         else
           raise "Unknown AST type: #{json_object["type"]}"
         end

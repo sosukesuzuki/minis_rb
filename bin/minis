@@ -1,0 +1,17 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+# require "bundler/setup"
+require_relative "../lib/minis_rb"
+
+if ARGV.empty?
+    puts "Usage: minis <file>"
+    exit 1
+end
+
+file_path = ARGV[0]
+file_content = File.read(file_path)
+
+result = MinisRb::MJsonEvaluator.evaluate_json_program(file_content)
+
+p result

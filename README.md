@@ -223,3 +223,11 @@ f(2);
 const x = [1, 2, 3, 4];
 x[3];
 ```
+
+## ソースコードとテスト
+
+|ファイル名|概要|
+|--------|----|
+|[`/lib/minis_rb/minis_ast.rb`](https://github.com/sosukesuzuki/minis_rb/blob/main/lib/minis_rb/minis_ast.rb)|内部的なAST表現と、そのビルダー関数。ロジックがほとんど存在しないため、テストはない。|
+|[`./lib/minis_rb/minis_evaluator.rb`](https://github.com/sosukesuzuki/minis_rb/blob/main/lib/minis_rb/minis_evaluator.rb)|ASTを評価して結果を得る関数。https://github.com/sosukesuzuki/minis_rb/blob/main/spec/minis_evaluator_spec.rb でテストしている。|
+|[`./lib/minis_rb/minis_json_evaluator.rb`](https://github.com/sosukesuzuki/minis_rb/blob/main/lib/minis_rb/minis_json_evaluator.rb)|JSON文字列をパースしてAST表現に変換する。https://github.com/sosukesuzuki/minis_rb/blob/main/spec/minis_json_evaluator_spec.rb でテストしている。|

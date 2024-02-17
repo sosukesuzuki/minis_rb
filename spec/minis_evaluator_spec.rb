@@ -254,4 +254,17 @@ RSpec.describe MinisRb::MEvaluators do
       expect(MinisRb::MEvaluators.evaluate_program(expr)).to eq(3)
     end
   end
+
+  describe "関数呼び出し" do
+    it "programに渡した関数を呼び出し、結果が返される" do
+      # def f(x) { x + 1 }; f(1) のような式
+      program = MinisRb::MASTBuilders.program(
+        [
+          MinisRb::MASTBuilders.function("f", ["x"], MinisRb::MASTBuilders.add(MinisRb::MASTBuilders.id("x"), MinisRb::MASTBuilders.int(1)))
+        ],
+        MinisRb::MASTBuilders.call("f", MinisRb::MASTBuilders.int(1))
+      )
+      expect(MinisRb::MEvaluators.evaluate_program(program)).to eq(2)
+    end
+  end
 end

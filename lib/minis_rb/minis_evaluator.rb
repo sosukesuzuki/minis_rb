@@ -65,7 +65,7 @@ module MinisRb
       elsif e.is_a? MInt
         e.value
       else
-        raise "Unknown expression type: #{e.class}"
+        raise "Unknown expression type: #{e.class} #{e.inspect}"
       end
     end
 

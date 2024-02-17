@@ -116,10 +116,10 @@ module MinisRb
             *json_object["expressions"].map { |expr| translate_to_ast(expr) }
           )
         when "index"
-            MASTBuilders.index(
-                translate_to_ast(json_object["array"]),
-                translate_to_ast(json_object["index"])
-            )
+          MASTBuilders.index(
+            translate_to_ast(json_object["array"]),
+            translate_to_ast(json_object["index"])
+          )
         else
           raise "Unknown AST type: #{json_object["type"]}"
         end

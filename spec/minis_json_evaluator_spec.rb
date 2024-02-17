@@ -116,27 +116,27 @@ RSpec.describe MinisRb::MJsonEvaluator do
     end
 
     describe "if" do
-        it "条件がtrueならthen節が評価される" do
-            json_string = "{\"type\":\"if\",\"condition\":{\"type\":\"==\",\"left\":2,\"right\":2},\"then\":1,\"else\":2}"
-            expect(MinisRb::MJsonEvaluator.evaluate_json(json_string)).to eq(1)
-        end
-    
-        it "条件がfalseならelse節が評価される" do
-            json_string = "{\"type\":\"if\",\"condition\":{\"type\":\"!=\",\"left\":2,\"right\":2},\"then\":1,\"else\":2}"
-            expect(MinisRb::MJsonEvaluator.evaluate_json(json_string)).to eq(2)
-        end
+      it "条件がtrueならthen節が評価される" do
+        json_string = "{\"type\":\"if\",\"condition\":{\"type\":\"==\",\"left\":2,\"right\":2},\"then\":1,\"else\":2}"
+        expect(MinisRb::MJsonEvaluator.evaluate_json(json_string)).to eq(1)
+      end
 
-        it "条件がfalseでかつelse_clauseがない場合はnilが返る" do
-            json_string = "{\"type\":\"if\",\"condition\":{\"type\":\"!=\",\"left\":2,\"right\":2},\"then\":1}"
-            expect(MinisRb::MJsonEvaluator.evaluate_json(json_string)).to eq(nil)
-        end
+      it "条件がfalseならelse節が評価される" do
+        json_string = "{\"type\":\"if\",\"condition\":{\"type\":\"!=\",\"left\":2,\"right\":2},\"then\":1,\"else\":2}"
+        expect(MinisRb::MJsonEvaluator.evaluate_json(json_string)).to eq(2)
+      end
+
+      it "条件がfalseでかつelse_clauseがない場合はnilが返る" do
+        json_string = "{\"type\":\"if\",\"condition\":{\"type\":\"!=\",\"left\":2,\"right\":2},\"then\":1}"
+        expect(MinisRb::MJsonEvaluator.evaluate_json(json_string)).to eq(nil)
+      end
     end
 
     describe "配列" do
-        it "配列の要素をインデックスで参照できる" do
-            json_string = "{\"type\":\"index\",\"array\":[1,2,3],\"index\":1}"
-            expect(MinisRb::MJsonEvaluator.evaluate_json(json_string)).to eq(2)
-        end
+      it "配列の要素をインデックスで参照できる" do
+        json_string = "{\"type\":\"index\",\"array\":[1,2,3],\"index\":1}"
+        expect(MinisRb::MJsonEvaluator.evaluate_json(json_string)).to eq(2)
+      end
     end
   end
 end

@@ -139,4 +139,25 @@ RSpec.describe MinisRb::MJsonEvaluator do
       end
     end
   end
+
+  describe "evaluate_json_program" do
+    describe "代入" do
+      it "代入された値を参照できる" do
+        json_string = "[{\"type\":\"assign\",\"name\":\"x\",\"value\":0},{\"type\":\"assign\",\"name\":\"x\",\"value\":1},{\"type\":\"id\",\"name\":\"x\"}]"
+        expect(MinisRb::MJsonEvaluator.evaluate_json_program(json_string)).to eq(1)
+      end
+    end
+
+    describe "while" do
+      it "結果がnilになる" do
+        json_string = "[{\"type\":\"while\",\"condition\":{\"type\":\"!=\",\"left\":2,\"right\":2},\"body\":[{\"type\":\"assign\",\"name\":\"x\",\"value\":1}]}]"
+        expect(MinisRb::MJsonEvaluator.evaluate_json_program(json_string)).to eq(nil)
+      end
+
+      it "bodiesが繰り返される" do
+        json_string = "[{\"type\":\"assign\",\"name\":\"x\",\"value\":0},{\"type\":\"while\",\"condition\":{\"type\":\"!=\",\"left\":2,\"right\":2},\"body\":[{\"type\":\"assign\",\"name\":\"x\",\"value\":1}]}]"
+        expect(MinisRb::MJsonEvaluator.evaluate_json_program(json_string)).to eq(nil)
+      end
+    end
+  end
 end

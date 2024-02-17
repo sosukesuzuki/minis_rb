@@ -9,11 +9,11 @@ module MinisRb
       environment = {}
       bodies = []
       functions = []
-      program.each do |key, value|
-        if key === "type" && value === "def"
-          functions.push(value)
+      program.each do |function_or_expression|
+        if function_or_expression.is_a?(Hash) && function_or_expression["type"] == "def"
+          functions.push(function_or_expression)
         else
-          bodies.push(translate_to_ast(value))
+          bodies.push(translate_to_ast(function_or_expression))
         end
       end
       functions.each do |function|

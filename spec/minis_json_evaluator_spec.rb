@@ -159,5 +159,13 @@ RSpec.describe MinisRb::MJsonEvaluator do
         expect(MinisRb::MJsonEvaluator.evaluate_json_program(json_string)).to eq(nil)
       end
     end
+
+    describe "関数呼び出し" do
+      it "関数の呼び出し結果が返る" do
+        # def f(x) { x + 1 } f(1) のようなプログラム
+        json_string = "[{\"type\":\"def\",\"name\":\"f\",\"params\":[\"x\"],\"body\":{\"type\":\"+\",\"left\":{\"type\":\"id\",\"name\":\"x\"},\"right\":1}},{\"type\":\"call\",\"name\":\"f\",\"args\":[1]}]"
+        expect(MinisRb::MJsonEvaluator.evaluate_json_program(json_string)).to eq(2)
+      end
+    end
   end
 end

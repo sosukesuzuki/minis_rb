@@ -17,7 +17,11 @@ module MinisRb
         end
       end
       functions.each do |function|
-        environment[function.name] = MASTBuilders.function(function.name, function.params, function.body)
+        environment[function["name"]] = MASTBuilders.function(
+          function["name"],
+          function["params"],
+          translate_to_ast(function["body"])
+        )
       end
       result = nil
       bodies.each do |body|

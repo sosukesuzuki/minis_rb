@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require_relative "minis_ast"
-
 module MinisRb
   module MEvaluators
     def self.evaluate_program(program)
